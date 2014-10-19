@@ -22,9 +22,10 @@ module Gutentag::ActiveRecord
     @tag_names ||= tags.collect(&:name)
   end
 
-  def tag_names=(names)
-    Gutentag::Dirty.call self, names
+  def tag_names=(names, delimiter='|')
+    names_array = Array( names.split(delimiter) ).flatten
+    Gutentag::Dirty.call self, names_array
 
-    @tag_names = names
+    @tag_names = names_array
   end
 end
